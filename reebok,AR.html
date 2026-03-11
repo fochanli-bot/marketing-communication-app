@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reebok One | Show Up. Become.</title>
+    <style>
+        /* 全局重置 + 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            /* 渐变背景替代纯白 */
+            background: linear-gradient(180deg, #f8f8f8 0%, #f0f0f0 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 主题变量（强化Reebok品牌视觉） */
+        :root {
+            --reebok-red: #ED1C24; /* 品牌红 */
+            --reebok-white: #FFFFFF;
+            --reebok-gray: #F5F5F5;
+            --reebok-light-gray: #E8E8E8;
+            --reebok-dark: #222222; /* 加深暗色提升对比 */
+            --reebok-green: #00A651; /* 爱尔兰绿 */
+            --reebok-orange: #FF7A00; /* 按钮高亮色 */
+            --text-gray: #555555;
+            --border-gray: #DDDDDD;
+            --gradient-primary: linear-gradient(135deg, #ED1C24 0%, #c9161c 100%);
+            --gradient-secondary: linear-gradient(135deg, #FF7A00 0%, #e06e00 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        /* 通用组件样式 */
+        .container {
+            width: 92%;
+            margin: 0 auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background: var(--gradient-secondary);
+            color: var(--reebok-white);
+            padding: 12px 0;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover::after {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--reebok-dark);
+            padding: 10px 0;
+            border: 2px solid var(--reebok-dark);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--reebok-dark);
+            color: var(--reebok-white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 25px 0 15px;
+            color: var(--reebok-dark);
+            position: relative;
+            padding-left: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 18px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: var(--radius-lg);
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tag-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(237, 28, 36, 0.2);
+        }
+
+        .tag-secondary {
+            background-color: var(--reebok-light-gray);
+            color: var(--text-gray);
+        }
+
+        /* 顶部导航栏（APP顶部） */
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--reebok-white);
+            padding: 12px 0;
+            box-shadow: var(--shadow-sm);
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 32px;
+            /* Reebok Logo 替换为真实品牌图（可替换为URL） */
+            background: url('https://static.vecteezy.com/system/resources/previews/023/870/061/non_2x/reebok-brand-logo-red-and-blue-symbol-clothes-design-icon-abstract-illustration-free-vector.jpg') center/contain no-repeat;
+            display: block;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 18px;
+            font-size: 20px;
+            color: var(--reebok-dark);
+        }
+
+        .header-icons span {
+            transition: all 0.3s ease;
+        }
+
+        .header-icons span:hover {
+            color: var(--reebok-red);
+            transform: scale(1.1);
+        }
+
+        /* 底部导航栏（APP核心导航） */
+        .app-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 414px;
+            margin: 0 auto;
+            background: var(--reebok-white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            z-index: 99;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-item.active {
+            color: var(--reebok-orange);
+            font-weight: 600;
+            background: rgba(255, 122, 0, 0.08);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+
+        /* 主内容区（滚动容器） */
+        .main-content {
+            padding-bottom: 70px;
+            background: linear-gradient(180deg, #f8f8f8 0%, #f5f5f5 100%);
+        }
+
+        /* 模块1：首页（默认显示） */
+        .home-page {
+            display: block;
+        }
+
+        /* 首页Hero Banner（核心视觉区） */
+        .home-banner {
+            width: 100%;
+            height: 180px;
+            border-radius: var(--radius-md);
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+            /* Hero图片：爱尔兰普通人训练场景（替换为真实URL） */
+            background: url('https://png.pngtree.com/thumb_back/fw800/background/20251118/pngtree-group-of-diverse-people-exercising-outdoors-in-a-sunny-park-performing-image_20447570.webp') center/cover no-repeat;
+            box-shadow: var(--shadow-md);
+        }
+
+        .home-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+        }
+
+        .banner-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: var(--reebok-white);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+
+        .banner-text h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .banner-text p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* 首页核心入口 */
+        .home-entry {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .entry-item {
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .entry-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .entry-icon {
+            font-size: 28px;
+            color: var(--reebok-orange);
+            margin-bottom: 8px;
+        }
+
+        .entry-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* 个性化推荐课程 */
+        .course-card {
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .course-img {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-sm);
+            /* 课程封面图 */
+            background: url('https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background-color: var(--reebok-light-gray);
+            border-radius: var(--radius-lg);
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .course-desc {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .course-time {
+            font-size: 11px;
+            color: var(--text-gray);
+        }
+
+        /* 微小胜利展示区 */
+        .win-show {
+            margin: 25px 0;
+        }
+
+        .win-list {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+
+        .win-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .win-item {
+            min-width: 280px;
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .win-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .win-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            /* 用户头像 */
+            background: url('https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+            border: 2px solid var(--reebok-light-gray);
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .win-content {
+            font-size: 13px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .win-img {
+            width: 100%;
+            height: 120px;
+            border-radius: var(--radius-sm);
+            /* 微小胜利图片 */
+            background: url('https://images.unsplash.com/photo-1581125351521-1dc297027976?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .win-like {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+        }
+
+        .win-like:hover {
+            color: var(--reebok-red);
+        }
+
+        /* 模块2：训练中心（默认隐藏） */
+        .train-page {
+            display: none;
+        }
+
+        /* 训练分类标签 */
+        .train-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            scrollbar-width: none;
+        }
+
+        .train-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .train-tab {
+            padding: 6px 14px;
+            background: var(--reebok-white);
+            border-radius: var(--radius-lg);
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .train-tab.active {
+            background: var(--gradient-secondary);
+            color: var(--reebok-white);
+            box-shadow: 0 2px 8px rgba(255, 122, 0, 0.2);
+        }
+
+        .train-tab:hover:not(.active) {
+            transform: translateY(-2px);
+            background: #fafafa;
+        }
+
+        /* 微小胜利打卡区 */
+        .check-in-area {
+            background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .check-in-icon {
+            font-size: 40px;
+            color: var(--reebok-orange);
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .check-in-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .check-in-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .check-in-btn {
+            width: 60%;
+        }
+
+        /* 训练计划展示 */
+        .plan-card {
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .plan-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .plan-progress {
+            font-size: 12px;
+            color: var(--reebok-orange);
+            font-weight: 500;
+        }
+
+        .plan-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .day-item {
+            background-color: var(--reebok-light-gray);
+            border-radius: var(--radius-sm);
+            padding: 8px 0;
+            text-align: center;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .day-item.active {
+            background: var(--gradient-secondary);
+            color: var(--reebok-white);
+            box-shadow: 0 2px 4px rgba(255, 122, 0, 0.2);
+        }
+
+        .day-item.finished {
+            background: var(--reebok-green);
+            color: var(--reebok-white);
+            box-shadow: 0 2px 4px rgba(0, 166, 81, 0.2);
+        }
+
+        /* 模块3：社交中心（默认隐藏） */
+        .social-page {
+            display: none;
+        }
+
+        /* 陪伴小组 */
+        .group-area {
+            margin-bottom: 25px;
+        }
+
+        .group-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .group-card {
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .group-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .group-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            /* 小组封面图 */
+            background: url('https://images.unsplash.com/photo-1599658864444-2dca0f17897f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+            border: 2px solid var(--reebok-light-gray);
+        }
+
+        .group-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .group-count {
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        /* 胜利广场 */
+        .square-area {
+            margin-bottom: 25px;
+        }
+
+        /* 模块4：装备商城（默认隐藏） */
+        .shop-page {
+            display: none;
+        }
+
+        /* 群体专属装备区 */
+        .group-shop {
+            margin-bottom: 25px;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .product-card {
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 140px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            /* 装备图片 */
+            background: url('https://www.reebok.eu/cdn/shop/files/25353223_56880975_800.webp?v=1744665234&width=800') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+        }
+
+        .product-title {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--reebok-red);
+            margin-bottom: 8px;
+        }
+
+        .product-tag {
+            font-size: 11px;
+            color: var(--reebok-orange);
+            font-weight: 500;
+        }
+
+        /* 优惠专区 */
+        .discount-area {
+            background: var(--gradient-primary);
+            color: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(237, 28, 36, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discount-area::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .discount-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .discount-desc {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 模块5：我的（默认隐藏） */
+        .mine-page {
+            display: none;
+        }
+
+        /* 个人资料 */
+        .profile-area {
+            background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            gap: 15px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            /* 个人头像 */
+            background: url('https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+            border: 3px solid var(--reebok-light-gray);
+        }
+
+        .profile-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .profile-tag {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* 成长档案 */
+        .growth-area {
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .growth-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--reebok-orange);
+            margin-bottom: 3px;
+        }
+
+        .stat-item p {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .growth-chart {
+            width: 100%;
+            height: 120px;
+            /* 成长趋势图 */
+            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+            border: 1px solid #eee;
+        }
+
+        /* 勋章区 */
+        .medal-area {
+            margin-bottom: 25px;
+        }
+
+        .medal-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+
+        .medal-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .medal-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .medal-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .medal-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            /* 勋章图片 */
+            background: linear-gradient(135deg, #ff7a00 0%, #e06e00 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 5px;
+            box-shadow: 0 2px 8px rgba(255, 122, 0, 0.2);
+        }
+
+        .medal-name {
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* 菜单列表 */
+        .menu-list {
+            background: var(--reebok-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-gray);
+            transition: all 0.2s ease;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: #f9f9f9;
+            padding-left: 18px;
+        }
+
+        .menu-icon {
+            font-size: 20px;
+            color: var(--text-gray);
+        }
+
+        .menu-text {
+            font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .menu-arrow {
+            font-size: 16px;
+            color: var(--text-gray);
+        }
+
+        /* 打卡成功弹窗（默认隐藏） */
+        .check-in-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            background: var(--reebok-white);
+            width: 85%;
+            border-radius: var(--radius-md);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            animation: modalPop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 50px;
+            color: var(--reebok-orange);
+            margin-bottom: 15px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .modal-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+
+        /* ========== 新增 AR 试衣 UI 样式 ========== */
+        /* AR 入口卡片 (放在商城页面) */
+        .ar-entry-card {
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .ar-entry-inner {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #e8e8e8, #f5f5f5);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .ar-entry-inner:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .ar-entry-icon {
+            font-size: 36px;
+            margin-right: 15px;
+        }
+        .ar-entry-text {
+            flex: 1;
+        }
+        .ar-entry-text h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .ar-entry-text p {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        .ar-entry-btn {
+            width: auto;
+            padding: 8px 16px;
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* AR 全屏试衣界面 */
+        .ar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            z-index: 200;
+            overflow-y: auto;
+            display: none;
+            padding: 20px 0 30px;
+        }
+        .ar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .ar-header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--reebok-dark);
+        }
+        .ar-close {
+            font-size: 36px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-gray);
+            transition: color 0.2s;
+        }
+        .ar-close:hover {
+            color: var(--reebok-red);
+        }
+        .ar-preview {
+            width: 90%;
+            margin: 25px auto;
+            background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+            height: 320px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        .preview-placeholder {
+            text-align: center;
+            background: rgba(255,255,255,0.5);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(2px);
+        }
+        .preview-placeholder span:first-child {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .preview-placeholder span:nth-child(2) {
+            font-size: 80px;
+            display: block;
+        }
+        .ar-selector-label {
+            text-align: center;
+            margin: 10px 0;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        .ar-product-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 15px 0 25px;
+        }
+        .ar-product-thumb {
+            width: 70px;
+            height: 70px;
+            background: #f0f0f0;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+        .ar-product-thumb.active {
+            border-color: var(--reebok-orange);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+        .ar-demo-btn {
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            background: var(--reebok-red);
+            color: white;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+        }
+        .ar-demo-note {
+            text-align: center;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 15px;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 375px) {
+            .course-img {
+                width: 90px;
+                height: 90px;
+            }
+
+            .product-img {
+                height: 130px;
+            }
+
+            .growth-stats {
+                gap: 10px;
+            }
+
+            .stat-item h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="app-header">
+        <div class="container header-container">
+            <div class="logo"></div>
+            <div class="header-icons">
+                <span>🔍</span>
+                <span>🔔</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 模块1：首页 -->
+        <div class="home-page" id="home-page">
+            <!-- 首页Hero Banner -->
+            <div class="home-banner">
+                <div class="banner-text">
+                    <h1>Show Up. Become.</h1>
+                    <p>Every small effort is a victory</p>
+                </div>
+            </div>
+
+            <!-- 核心入口 -->
+            <div class="home-entry">
+                <div class="entry-item" onclick="switchPage('train-page')">
+                    <div class="entry-icon">🏋️</div>
+                    <div class="entry-text">Train Today</div>
+                </div>
+                <div class="entry-item" onclick="showCheckInModal()">
+                    <div class="entry-icon">✅</div>
+                    <div class="entry-text">Check In</div>
+                </div>
+                <div class="entry-item" onclick="switchPage('shop-page')">
+                    <div class="entry-icon">🛍️</div>
+                    <div class="entry-text">Gear Shop</div>
+                </div>
+            </div>
+
+            <!-- 个性化推荐课程 -->
+            <h3 class="section-title">Recommended For You</h3>
+            <div class="course-card">
+                <div class="course-img"></div>
+                <div class="course-info">
+                    <span class="course-tag">Mum's Special</span>
+                    <h4 class="course-title">15-Min Stretch for Mums</h4>
+                    <p class="course-desc">Complete during baby naps, relieve fatigue, stretch your body, persistence pays off</p>
+                    <p class="course-time">Duration: 15 mins | Difficulty: Easy</p>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-img"></div>
+                <div class="course-info">
+                    <span class="course-tag">Workplace Special</span>
+                    <h4 class="course-title">10-Min Neck & Shoulder Relief</h4>
+                    <p class="course-desc">Complete during commute or lunch break, relieve neck and shoulder discomfort from sitting</p>
+                    <p class="course-time">Duration: 10 mins | Difficulty: Easy</p>
+                </div>
+            </div>
+
+            <!-- 微小胜利展示区 -->
+            <div class="win-show">
+                <h3 class="section-title">Small Victories</h3>
+                <div class="win-list">
+                    <div class="win-item">
+                        <div class="win-user">
+                            <div class="user-avatar"></div>
+                            <div class="user-name">Emma (Irish Mum)</div>
+                        </div>
+                        <p class="win-content">Finished 15-min stretch while baby napped today! Short but consistent - that's a win! 💪</p>
+                        <div class="win-img"></div>
+                        <div class="win-like">
+                            <span>❤️</span>
+                            <span>28</span>
+                        </div>
+                    </div>
+
+                    <div class="win-item">
+                        <div class="win-user">
+                            <div class="user-avatar"></div>
+                            <div class="user-name">Liam (Irish Professional)</div>
+                        </div>
+                        <p class="win-content">7 days of consistent 10-min neck training! My shoulders finally feel relaxed - small progress is worth celebrating!</p>
+                        <div class="win-img"></div>
+                        <div class="win-like">
+                            <span>❤️</span>
+                            <span>35</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 线下活动联动 -->
+            <h3 class="section-title">Offline Events</h3>
+            <div class="course-card">
+                <div class="course-img"></div>
+                <div class="course-info">
+                    <span class="course-tag">Dublin Offline</span>
+                    <h4 class="course-title">15-Min Small Wins Pop-up Workout</h4>
+                    <p class="course-desc">Free pop-up session at Dublin shopping district, earn medal and discount on completion</p>
+                    <p class="course-time">Date: 15th April 12:30 | Location: Grafton Street, Dublin</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模块2：训练中心 -->
+        <div class="train-page" id="train-page">
+            <h3 class="section-title">Training Center</h3>
+
+            <!-- 训练分类标签 -->
+            <div class="train-tabs">
+                <div class="train-tab active">All</div>
+                <div class="train-tab">Fractional</div>
+                <div class="train-tab">Mum's Special</div>
+                <div class="train-tab">Workplace Special</div>
+                <div class="train-tab">Rehab Training</div>
+            </div>
+
+            <!-- 微小胜利打卡区 -->
+            <div class="check-in-area">
+                <div class="check-in-icon">✅</div>
+                <h4 class="check-in-title">Today's Small Victory Check-in</h4>
+                <p class="check-in-desc">Complete today's workout and record your small victory</p>
+                <button class="btn-primary check-in-btn" onclick="showCheckInModal()">Check In Now</button>
+            </div>
+
+            <!-- 我的训练计划 -->
+            <h3 class="section-title">My Training Plan</h3>
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h4 class="plan-title">21-Day Small Wins Plan (15 mins/day)</h4>
+                    <span class="plan-progress">7/21 days (33% completed)</span>
+                </div>
+                <div class="plan-days">
+                    <div class="day-item finished">1</div>
+                    <div class="day-item finished">2</div>
+                    <div class="day-item finished">3</div>
+                    <div class="day-item finished">4</div>
+                    <div class="day-item finished">5</div>
+                    <div class="day-item finished">6</div>
+                    <div class="day-item finished">7</div>
+                    <div class="day-item">8</div>
+                    <div class="day-item">9</div>
+                    <div class="day-item">10</div>
+                    <div class="day-item">11</div>
+                    <div class="day-item">12</div>
+                    <div class="day-item">13</div>
+                    <div class="day-item">14</div>
+                    <div class="day-item">15</div>
+                    <div class="day-item">16</div>
+                    <div class="day-item">17</div>
+                    <div class="day-item">18</div>
+                    <div class="day-item">19</div>
+                    <div class="day-item">20</div>
+                    <div class="day-item">21</div>
+                </div>
+            </div>
+
+            <!-- 推荐课程 -->
+            <h3 class="section-title">Recommended Courses</h3>
+            <div class="course-card">
+                <div class="course-img"></div>
+                <div class="course-info">
+                    <span class="course-tag">Student Special</span>
+                    <h4 class="course-title">10-Min Dorm Workout</h4>
+                    <p class="course-desc">No equipment needed, complete in dorm, boost fitness easily with consistent check-ins</p>
+                    <p class="course-time">Duration: 10 mins | Difficulty: Easy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模块3：社交中心 -->
+        <div class="social-page" id="social-page">
+            <h3 class="section-title">Social Center</h3>
+
+            <!-- 陪伴小组 -->
+            <div class="group-area">
+                <h3 class="section-title">Support Groups</h3>
+                <div class="group-list">
+                    <div class="group-card">
+                        <div class="group-img"></div>
+                        <h4 class="group-title">Irish Mums Training Group</h4>
+                        <p class="group-count">48 participants</p>
+                        <button class="btn-secondary" style="font-size:13px; padding:8px 0;">Join Group</button>
+                    </div>
+                    <div class="group-card">
+                        <div class="group-img"></div>
+                        <h4 class="group-title">Workplace Stretch Support Group</h4>
+                        <p class="group-count">62 participants</p>
+                        <button class="btn-secondary" style="font-size:13px; padding:8px 0;">Join Group</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 胜利广场 -->
+            <div class="square-area">
+                <h3 class="section-title">Victory Square</h3>
+                <div class="win-item" style="margin-bottom:15px;">
+                    <div class="win-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-name">Sophia (Irish Student)</div>
+                    </div>
+                    <p class="win-content">21 days of consistent check-ins! From struggling to keep going to actively training every day - that's my small victory! ✨</p>
+                    <div class="win-img"></div>
+                    <div class="win-like">
+                        <span>❤️</span>
+                        <span>42</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模块4：装备商城 -->
+        <div class="shop-page" id="shop-page">
+            <h3 class="section-title">Gear Shop</h3>
+
+            <!-- 优惠专区 -->
+            <div class="discount-area">
+                <h4 class="discount-title">Exclusive Discount</h4>
+                <p class="discount-desc">10% off for app registration, extra 20% off for app download (stackable)</p>
+                <button class="btn-secondary" style="background:white; color:var(--reebok-red);">Claim Now</button>
+            </div>
+
+            <!-- ========== 新增 AR 试衣入口 ========== -->
+            <div class="ar-entry-card" onclick="showARTryon()">
+                <div class="ar-entry-inner">
+                    <span class="ar-entry-icon">🕶️</span>
+                    <div class="ar-entry-text">
+                        <h4>AR Try-On Experience</h4>
+                        <p>Virtually try Reebok shoes & gear — just a UI demo</p>
+                    </div>
+                    <div class="ar-entry-btn">Try</div>
+                </div>
+            </div>
+
+            <!-- 群体专属装备区 -->
+            <div class="group-shop">
+                <h3 class="section-title">Group Exclusive Gear</h3>
+                <div class="product-list">
+                    <div class="product-card">
+                        <div class="product-img"></div>
+                        <h4 class="product-title">Mum's Loose Workout Pants</h4>
+                        <p class="product-price">€69.99</p>
+                        <span class="product-tag">Mum's Special</span>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img"></div>
+                        <h4 class="product-title">Workplace Commute Lightweight Shoes</h4>
+                        <p class="product-price">€89.99</p>
+                        <span class="product-tag">Workplace Special</span>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img"></div>
+                        <h4 class="product-title">Student Basic Training T-Shirt</h4>
+                        <p class="product-price">€29.99</p>
+                        <span class="product-tag">Student Special</span>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img"></div>
+                        <h4 class="product-title">Rehab Soft Training Shoes</h4>
+                        <p class="product-price">€79.99</p>
+                        <span class="product-tag">Rehab Special</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新品专区 -->
+            <div class="group-shop">
+                <h3 class="section-title">Irish New Arrivals</h3>
+                <div class="product-list">
+                    <div class="product-card">
+                        <div class="product-img"></div>
+                        <h4 class="product-title">Ireland Limited Edition Lightweight Shoes</h4>
+                        <p class="product-price">€99.99</p>
+                        <span class="product-tag">Ireland Limited</span>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img"></div>
+                        <h4 class="product-title">Women's Breathable Workout Set</h4>
+                        <p class="product-price">€84.99</p>
+                        <span class="product-tag">New Arrival</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模块5：我的 -->
+        <div class="mine-page" id="mine-page">
+            <h3 class="section-title">My Profile</h3>
+
+            <!-- 个人资料 -->
+            <div class="profile-area">
+                <div class="profile-avatar"></div>
+                <div class="profile-info">
+                    <h4 class="profile-name">Your Name</h4>
+                    <p class="profile-tag">Irish Fitness Enthusiast | 21-Day Plan Participant</p>
+                </div>
+            </div>
+
+            <!-- 成长档案 -->
+            <div class="growth-area">
+                <h3 class="section-title" style="margin:0 0 15px 0;">Growth Record</h3>
+                <div class="growth-stats">
+                    <div class="stat-item">
+                        <h3>21</h3>
+                        <p>Days Trained</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>7</h3>
+                        <p>Medals Earned</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>156</h3>
+                        <p>Minutes Trained</p>
+                    </div>
+                </div>
+                <div class="growth-chart">Training Trend Chart (Monthly)</div>
+            </div>
+
+            <!-- 勋章区 -->
+            <div class="medal-area">
+                <h3 class="section-title">My Medals</h3>
+                <div class="medal-list">
+                    <div class="medal-item">
+                        <div class="medal-icon">7</div>
+                        <div class="medal-name">7-Day Streak</div>
+                    </div>
+                    <div class="medal-item">
+                        <div class="medal-icon">10</div>
+                        <div class="medal-name">10 Workouts</div>
+                    </div>
+                    <div class="medal-item">
+                        <div class="medal-icon">21</div>
+                        <div class="medal-name">21-Day Completion</div>
+                    </div>
+                    <div class="medal-item">
+                        <div class="medal-icon">💪</div>
+                        <div class="medal-name">First Victory</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 菜单列表 -->
+            <div class="menu-list">
+                <div class="menu-item">
+                    <div class="menu-icon">⚙️</div>
+                    <div class="menu-text">Settings</div>
+                    <div class="menu-arrow">→</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">🎁</div>
+                    <div class="menu-text">Rewards & Discounts</div>
+                    <div class="menu-arrow">→</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">📞</div>
+                    <div class="menu-text">Contact Support</div>
+                    <div class="menu-arrow">→</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">📝</div>
+                    <div class="menu-text">Feedback</div>
+                    <div class="menu-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <footer class="app-footer">
+        <div class="nav-item active" onclick="switchPage('home-page')">
+            <div class="nav-icon">🏠</div>
+            <div>Home</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('train-page')">
+            <div class="nav-icon">🏋️</div>
+            <div>Train</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('social-page')">
+            <div class="nav-icon">👥</div>
+            <div>Social</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('shop-page')">
+            <div class="nav-icon">🛒</div>
+            <div>Shop</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('mine-page')">
+            <div class="nav-icon">👤</div>
+            <div>Me</div>
+        </div>
+    </footer>
+
+    <!-- 打卡成功弹窗 -->
+    <div class="check-in-modal" id="check-in-modal">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <h3 class="modal-title">Check-in Successful!</h3>
+            <p class="modal-desc">Congratulations on your small victory today! Keep up the great work!</p>
+            <button class="btn-primary" onclick="closeCheckInModal()">Continue Training</button>
+        </div>
+    </div>
+
+    <!-- ========== 新增 AR 试衣全屏界面 (纯 UI 展示) ========== -->
+    <div class="ar-overlay" id="ar-overlay">
+        <div class="ar-header">
+            <h2>AR Try-On</h2>
+            <span class="ar-close" onclick="hideARTryon()">&times;</span>
+        </div>
+        <div class="ar-preview">
+            <div class="preview-placeholder">
+                <span>📷 Camera Preview</span>
+                <span>👟</span>
+                <span style="font-size:14px;">Reebok Ireland Edition</span>
+            </div>
+        </div>
+        <div class="ar-selector-label">Select a product to try on</div>
+        <div class="ar-product-selector">
+            <div class="ar-product-thumb active" onclick="this.classList.add('active'); document.querySelectorAll('.ar-product-thumb').forEach(el => { if(el !== this) el.classList.remove('active'); })">👟</div>
+            <div class="ar-product-thumb" onclick="this.classList.add('active'); document.querySelectorAll('.ar-product-thumb').forEach(el => { if(el !== this) el.classList.remove('active'); })">👕</div>
+            <div class="ar-product-thumb" onclick="this.classList.add('active'); document.querySelectorAll('.ar-product-thumb').forEach(el => { if(el !== this) el.classList.remove('active'); })">🧦</div>
+            <div class="ar-product-thumb" onclick="this.classList.add('active'); document.querySelectorAll('.ar-product-thumb').forEach(el => { if(el !== this) el.classList.remove('active'); })">🧢</div>
+        </div>
+        <button class="btn-primary ar-demo-btn" onclick="alert('This is a UI demo only — no actual AR functionality')">Take Photo & Try On</button>
+        <p class="ar-demo-note">Demo mode — UI only, no real AR</p>
+    </div>
+
+    <script>
+        // 页面切换函数
+        function switchPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.home-page, .train-page, .social-page, .shop-page, .mine-page').forEach(page => {
+                page.style.display = 'none';
+            });
+            // 显示目标页面
+            document.getElementById(pageId).style.display = 'block';
+            
+            // 更新底部导航激活状态
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // 找到对应导航项并激活
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('onclick').includes(pageId)) {
+                    item.classList.add('active');
+                }
+            });
+
+            // 切换页面时自动关闭 AR 试衣界面（如果有）
+            hideARTryon();
+        }
+
+        // 显示打卡弹窗
+        function showCheckInModal() {
+            document.getElementById('check-in-modal').style.display = 'flex';
+        }
+
+        // 关闭打卡弹窗
+        function closeCheckInModal() {
+            document.getElementById('check-in-modal').style.display = 'none';
+        }
+
+        // ===== AR 试衣相关函数 (UI 展示) =====
+        function showARTryon() {
+            document.getElementById('ar-overlay').style.display = 'block';
+            // 可选：禁止背景滚动（轻微体验优化）
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideARTryon() {
+            document.getElementById('ar-overlay').style.display = 'none';
+            document.body.style.overflow = ''; // 恢复滚动
+        }
+    </script>
+</body>
+</html>
